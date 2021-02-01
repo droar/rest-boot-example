@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.droar</groupId>
+	<artifactId>restex_svc</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+
+	<name>restex_svc</name>
+	<description>ApiRest Portal de Mediadores V${project.version}</description>
+
+	<modules>
+		<module>restex_svc-env</module>
+		<module>restex_svc-common</module>
+		<module>restex_svc-core</module>
+		<module>restex_svc-web</module>
+		<module>restex_svc-boot</module>
+	</modules>
+
+	<properties>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.source.version>11</java.source.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.target.version>11</java.target.version>
+		<appShortId>restex_svc</appShortId>
+		<revision>0.0.1-RELEASE</revision>
+
+		<!-- Repository -->
+		<repository.droar.release>https://maven.pkg.github.com/droar/personal-repo/repository/</repository.droar.release>
+
+		<!-- Versions -->
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<spring.boot.version>2.4.2</spring.boot.version>
+		<json.version>20180813</json.version>
+		<javax.servlet.version>2.5</javax.servlet.version>
+
+		<mvn.war.version>3.3.1</mvn.war.version>
+		<!-- FWK -->
+		<boot.fwk.version>0.0.1-RELEASE</boot.fwk.version>
+	</properties>
+
+	<!-- Init dependencies -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.droar</groupId>
+				<artifactId>restex_svc-boot</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.droar</groupId>
+				<artifactId>restex_svc-env</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.droar</groupId>
+				<artifactId>restex_svc-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.droar</groupId>
+				<artifactId>restex_svc-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.droar</groupId>
+				<artifactId>restex_svc-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<!-- For stable releases. -->
+		<repository>
+			<id>personal-repo</id>
+			<name>Droar Stable Libraries</name>
+			<url>${repository.droar.release}</url>
+		</repository>
+	</distributionManagement>
+</project>

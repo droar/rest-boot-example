@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.droar</groupId>
+		<artifactId>restex_svc</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>restex_svc-boot</artifactId>
+	<packaging>war</packaging>
+	<name>restex_svc-boot</name>
+	<description>Rest example with boot and simple rest controllers</description>
+
+	<dependencies>
+		<!-- Project relation dependencies -->
+		<dependency>
+			<groupId>com.droar</groupId>
+			<artifactId>restex_svc-env</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.droar</groupId>
+			<artifactId>restex_svc-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.droar</groupId>
+			<artifactId>restex_svc-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.droar</groupId>
+			<artifactId>restex_svc-web</artifactId>
+		</dependency>
+		<!-- Spring boot dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<exclusions>
+				<!-- Wel let the logback manage the logs on ENV  -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Custom dependencies -->
+		<!-- We dont want tomcat using the emb server -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Hikari to mantain connections -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${mvn.war.version}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<directory>${project.basedir}/src/main/resources/META-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>META-INF</targetPath>
+							<includes>
+								<include>**/context.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+				<configuration>
+					<mainClass>com.droar.restex_svc.RunSVC</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<finalName>restex_svc</finalName>
+	</build>
+
+</project>
