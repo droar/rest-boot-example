@@ -23,7 +23,7 @@ public class AppConfiguration {
   /** This place is for us to put java beans as usual**/
   
   @Bean
-  public String soyUnBeanDummy() {
+  public String iAmJustADummyBean() {
     return "IAmADummyBean";
   }
 }
